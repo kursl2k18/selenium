@@ -16,28 +16,6 @@ public class App
     public static void main( String[] args )
     {
         System.out.println( "Hello World!" );
-        System.setProperty("webdriver.chrome.driver", "/Users/adam/Documents/LAIT/chromedriver");
-    
-        driver = new ChromeDriver();
-        driver.get("http://newtours.demoaut.com");
-        
-        driver.findElement(By.linkText("CONTACT")).click();
-        sleep(2);
-        driver.findElement(By.linkText("SUPPORT")).click();
-        sleep(1);
-        driver.findElement(By.linkText("REGISTER")).click();
-        sleep(2);
-        driver.findElement(By.linkText("SIGN-ON")).click();
-        sleep(3);
-        driver.quit();
     }
     
-    public static void sleep(int seconds) {
-    	try {
-			Thread.sleep(seconds*1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    }
 }
