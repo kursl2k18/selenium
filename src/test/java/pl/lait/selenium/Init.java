@@ -26,4 +26,8 @@ public class Init {
 			e.printStackTrace();
 		}
     }
+	
+	public static void close() {
+		driver.quit();
+	}
 }
