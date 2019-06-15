@@ -2,7 +2,7 @@ package pl.lait.selenium;
 
 import org.junit.*;
 import org.junit.Test;
-import org.openqa.selenium.By;
+import org.openqa.selenium.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -20,6 +20,13 @@ public class MainMenuTest {
 	
 	@Test
 	public void mainMenu() {
+		
+		/*
+		WebElement contactLink;
+		contactLink = driver.findElement(By.linkText("CONTACT"));
+		contactLink.click();
+		*/
+		
 		driver.findElement(By.linkText("CONTACT")).click();
 		Init.sleep(1);
 		driver.findElement(By.linkText("SUPPORT")).click();
@@ -39,7 +46,8 @@ public class MainMenuTest {
 		driver.findElement(By.name("login")).click();
 		Init.sleep(2);
 		
-		String oneWayXpath = "/html/body/div/table/tbody/tr/"
+		String oneWayXpath = "/html/body/div/"
+				+ "table/tbody/tr/"
 				+ "td[2]/table/tbody/tr[4]/td/table/tbody/tr/"
 				+ "td[2]/table/tbody/tr[5]/td/form/table/tbody/"
 				+ "tr[2]/td[2]/b/font/input[2]";
@@ -67,11 +75,11 @@ public class MainMenuTest {
 		WebElement toPortSelectWebElem = driver.findElement(By.name("toPort"));
 		Select toPortSelect = new Select(toPortSelectWebElem);
 		toPortSelect.selectByValue("Frankfurt");
-		//fromMonth
+		//toMonth
 		WebElement toMonthSelectWebElem = driver.findElement(By.name("toMonth"));
 		Select toMonthSelect = new Select(toMonthSelectWebElem);
 		toMonthSelect.selectByValue("8");
-		//fromDay
+		//toDay
 		WebElement toDaySelectWebElem = driver.findElement(By.name("toDay"));
 		Select toDaySelect = new Select(toDaySelectWebElem);
 		toDaySelect.selectByValue("17");
