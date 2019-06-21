@@ -8,96 +8,81 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
+import pageObjects.LoginPage;
+import pageObjects.MainPage;
+import pageObjects.ReservationPage;
+import pageObjects.ReservationPage2;
+
 public class MainMenuTest {
 	
 	
 	WebDriver driver;
+	MainPage mp = new MainPage();
+	LoginPage lp = new LoginPage();
+	ReservationPage rp = new ReservationPage();
+	ReservationPage2 rp2 = new ReservationPage2();
 	
 	@Before
 	public void start() {
+		System.out.println("wewnątrz metody start - @before");
 		driver = Init.getDriver();
 	}
 	
+	//@Ignore
 	@Test
 	public void mainMenu() {
 		
-		/*
-		WebElement contactLink;
-		contactLink = driver.findElement(By.linkText("CONTACT"));
-		contactLink.click();
-		*/
 		
-		driver.findElement(By.linkText("CONTACT")).click();
-		Init.sleep(1);
-		driver.findElement(By.linkText("SUPPORT")).click();
-		Init.sleep(1);
-		driver.findElement(By.linkText("REGISTER")).click();
-		Init.sleep(1);
-		driver.findElement(By.linkText("SIGN-ON")).click();
+		String title = driver.getTitle();
+		System.out.println(title);
+		
+		mp.contactLinkClick();
+		mp.registerLinkClick();
+		mp.supportLinkClick();
+		mp.signOnLinkClick();
+		
+		title = driver.getTitle();
+		System.out.println(title);
+		
+		Init.printScr(driver, "mainMenu", "menuOnly");
+		
 		Init.sleep(1);
 	}
 
+	@Ignore
 	@Test
 	public void login() {
-		driver.findElement(By.linkText("SIGN-ON")).click();
-		driver.findElement(By.name("userName")).sendKeys("admdz");
-		driver.findElement(By.name("password")).sendKeys("qwe123");
-		Init.sleep(2);
-		driver.findElement(By.name("login")).click();
-		Init.sleep(2);
-		
-		String oneWayXpath = "/html/body/div/"
-				+ "table/tbody/tr/"
-				+ "td[2]/table/tbody/tr[4]/td/table/tbody/tr/"
-				+ "td[2]/table/tbody/tr[5]/td/form/table/tbody/"
-				+ "tr[2]/td[2]/b/font/input[2]";
-		
-		driver.findElement(By.xpath(oneWayXpath)).click();
-		
-		WebElement passSelect = driver.findElement(By.name("passCount"));
-		Select pass = new Select(passSelect);
-		pass.selectByValue("2");
-		
-		//fromPort
-		WebElement fromPortSelectWebElem = driver.findElement(By.name("fromPort"));
-		Select fromPortSelect = new Select(fromPortSelectWebElem);
-		fromPortSelect.selectByValue("Frankfurt");
-		//fromMonth
-		WebElement fromMonthSelectWebElem = driver.findElement(By.name("fromMonth"));
-		Select fromMonthSelect = new Select(fromMonthSelectWebElem);
-		fromMonthSelect.selectByValue("7");
-		//fromDay
-		WebElement fromDaySelectWebElem = driver.findElement(By.name("fromDay"));
-		Select fromDaySelect = new Select(fromDaySelectWebElem);
-		fromDaySelect.selectByValue("15");
-		
-		//toPort
-		WebElement toPortSelectWebElem = driver.findElement(By.name("toPort"));
-		Select toPortSelect = new Select(toPortSelectWebElem);
-		toPortSelect.selectByValue("Frankfurt");
-		//toMonth
-		WebElement toMonthSelectWebElem = driver.findElement(By.name("toMonth"));
-		Select toMonthSelect = new Select(toMonthSelectWebElem);
-		toMonthSelect.selectByValue("8");
-		//toDay
-		WebElement toDaySelectWebElem = driver.findElement(By.name("toDay"));
-		Select toDaySelect = new Select(toDaySelectWebElem);
-		toDaySelect.selectByValue("17");
-		
-		//airline
-		WebElement airlineWebElem = driver.findElement(By.name("airline"));
-		Select airline = new Select(airlineWebElem);
-		airline.selectByVisibleText("Blue Skies Airlines");
-		
-		String serviceXpath = "/html/body/div/table/tbody/"
-				+ "tr/td[2]/table/tbody/tr[4]/td/table/"
-				+ "tbody/tr/td[2]/table/tbody/tr[5]/td/"
-				+ "form/table/tbody/tr[9]/td[2]/font/font/input[1]";
-		driver.findElement(By.xpath(serviceXpath)).click();
-		
-		Init.sleep(5);
+		String title = driver.getTitle();
+		System.out.println(title);
 		
 		
+		
+		mp.signOnLinkClick();
+		lp.loginAs("admdz", "qwe123");
+		
+		title = driver.getTitle();
+		System.out.println(title);
+		
+		Assert.assertTrue("Page title is wrong", title.equals("Find a Flight: Mercury Tours:"));
+		
+		Init.sleep(1);	
+	}
+	@Ignore
+	@Test
+	public void reservationTest() {
+		mp.signOnLinkClick();
+		lp.loginAs("admdz", "qwe123");
+		rp.oneWay();
+		rp.passengersCount("2");
+		rp.from("Frankfurt", "17", "5");
+		rp.to("London", "19", "6");
+		rp.airline("Blue Skies Airlines");
+		rp.serviceBusinesClass();
+		
+		rp.continueButtonClick();
+		
+		rp2.pass0("Adaś", "Aaaa");
+		rp2.continueBtnClick();
 	}
 	
 	@After
